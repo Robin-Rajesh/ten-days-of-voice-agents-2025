@@ -1,4 +1,7 @@
+import json
 import logging
+from datetime import datetime
+from pathlib import Path
 
 from dotenv import load_dotenv
 from livekit.agents import (
@@ -8,12 +11,12 @@ from livekit.agents import (
     JobProcess,
     MetricsCollectedEvent,
     RoomInputOptions,
+    RunContext,
     WorkerOptions,
     cli,
+    function_tool,
     metrics,
     tokenize,
-    # function_tool,
-    # RunContext
 )
 from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
@@ -22,32 +25,179 @@ logger = logging.getLogger("agent")
 
 load_dotenv(".env.local")
 
+# Order state structure
+ORDER_STATE = {
+    "drinkType": None,
+    "size": None,
+    "milk": None,
+    "extras": [],
+    "name": None,
+}
 
-class Assistant(Agent):
+
+class BaristaAgent(Agent):
     def __init__(self) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
-            You are curious, friendly, and have a sense of humor.""",
-        )
+            instructions="""You are Alex, a friendly barista at Brew & Bean Coffee Shop. Always mention you're from the cafe when greeting customers.
 
-    # To add tools, use the @function_tool decorator.
-    # Here's an example that adds a simple weather tool.
-    # You also have to add `from livekit.agents import function_tool, RunContext` to the top of this file
-    # @function_tool
-    # async def lookup_weather(self, context: RunContext, location: str):
-    #     """Use this tool to look up current weather information in the given location.
-    #
-    #     If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
-    #
-    #     Args:
-    #         location: The location to look up weather information for (e.g. city name)
-    #     """
-    #
-    #     logger.info(f"Looking up weather for {location}")
-    #
-    #     return "sunny with a temperature of 70 degrees."
+Collect: drinkType, size, milk, extras, name. Ask ONE question at a time. Keep responses SHORT - 5-10 words max. Be warm but brief.
+Use tools immediately when customer provides information. Once complete, save the order.
+
+When greeting, say something like "Hi, welcome to Brew & Bean Cafe" or "Hello from Brew & Bean Cafe".
+
+CRITICAL: Respond FAST. Keep answers under 10 words. No explanations unless asked.""",
+        )
+        self.room = None  # Will be set when session starts
+    
+    async def _publish_order_update(self, context: RunContext) -> None:
+        """Helper function to publish order state updates to the frontend."""
+        if not self.room:
+            return  # Can't publish without room
+        
+        try:
+            payload = json.dumps({
+                "type": "order_update",
+                "data": {
+                    "drinkType": ORDER_STATE["drinkType"],
+                    "size": ORDER_STATE["size"],
+                    "milk": ORDER_STATE["milk"],
+                    "extras": ORDER_STATE["extras"],
+                    "name": ORDER_STATE["name"],
+                }
+            })
+            
+            await self.room.local_participant.publish_data(
+                payload=payload.encode('utf-8'),
+                reliable=True,
+            )
+            logger.info("Published order update to frontend")
+        except Exception as e:
+            logger.error(f"Failed to publish order update: {e}")
+
+    @function_tool
+    async def update_drink_type(self, context: RunContext, drink_type: str) -> str:
+        """Update the drink type in the order.
+        
+        Args:
+            drink_type: The type of drink the customer wants (e.g., latte, cappuccino, americano, espresso, mocha)
+        """
+        ORDER_STATE["drinkType"] = drink_type
+        logger.info(f"Updated drink type: {drink_type}")
+        await self._publish_order_update(context)
+        return f"{drink_type}. What size?"
+
+    @function_tool
+    async def update_size(self, context: RunContext, size: str) -> str:
+        """Update the size of the drink in the order.
+        
+        Args:
+            size: The size of the drink (small, medium, large, or tall, grande, venti)
+        """
+        ORDER_STATE["size"] = size
+        logger.info(f"Updated size: {size}")
+        await self._publish_order_update(context)
+        return f"{size}. What milk?"
+
+    @function_tool
+    async def update_milk(self, context: RunContext, milk: str) -> str:
+        """Update the milk type in the order.
+        
+        Args:
+            milk: The type of milk (whole milk, skim milk, almond milk, oat milk, soy milk, coconut milk, or none)
+        """
+        ORDER_STATE["milk"] = milk
+        logger.info(f"Updated milk: {milk}")
+        await self._publish_order_update(context)
+        return f"{milk}. Any extras?"
+
+    @function_tool
+    async def update_extras(self, context: RunContext, extras: list[str]) -> str:
+        """Update the extras in the order.
+        
+        Args:
+            extras: A list of extras the customer wants (e.g., ["whipped cream", "caramel"] or ["extra shot"])
+        """
+        ORDER_STATE["extras"] = extras
+        logger.info(f"Updated extras: {extras}")
+        await self._publish_order_update(context)
+        return f"Added. Your name?"
+
+    @function_tool
+    async def update_name(self, context: RunContext, name: str) -> str:
+        """Update the customer's name in the order.
+        
+        Args:
+            name: The customer's name for the order
+        """
+        ORDER_STATE["name"] = name
+        logger.info(f"Updated name: {name}")
+        await self._publish_order_update(context)
+        return f"Thanks {name}. Saving your order now."
+
+    @function_tool
+    async def check_order_complete(self, context: RunContext) -> str:
+        """Check if the order has all required fields filled.
+        
+        Returns a message indicating which fields are still missing, or confirms the order is complete.
+        """
+        missing = []
+        if not ORDER_STATE["drinkType"]:
+            missing.append("drink type")
+        if not ORDER_STATE["size"]:
+            missing.append("size")
+        if not ORDER_STATE["milk"]:
+            missing.append("milk type")
+        if not ORDER_STATE["name"]:
+            missing.append("name")
+        
+        if missing:
+            return f"I still need to know your {', '.join(missing)}. Let me ask you about that."
+        else:
+            return "Your order is complete! Let me save it for you."
+
+    @function_tool
+    async def save_order(self, context: RunContext) -> str:
+        """Save the complete order to a JSON file. Only call this when all order fields are filled.
+        
+        The order will be saved to a file named with the customer's name and timestamp.
+        """
+        # Check if order is complete
+        if not all([ORDER_STATE["drinkType"], ORDER_STATE["size"], ORDER_STATE["milk"], ORDER_STATE["name"]]):
+            return "I can't save the order yet. I'm still missing some information. Let me check what we need."
+        
+        # Create orders directory if it doesn't exist
+        orders_dir = Path("orders")
+        orders_dir.mkdir(exist_ok=True)
+        
+        # Create filename with customer name and timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_name = "".join(c for c in ORDER_STATE["name"] if c.isalnum() or c in (' ', '-', '_')).strip()
+        filename = orders_dir / f"order_{safe_name}_{timestamp}.json"
+        
+        # Prepare order data
+        order_data = {
+            "drinkType": ORDER_STATE["drinkType"],
+            "size": ORDER_STATE["size"],
+            "milk": ORDER_STATE["milk"],
+            "extras": ORDER_STATE["extras"],
+            "name": ORDER_STATE["name"],
+            "timestamp": datetime.now().isoformat(),
+        }
+        
+        # Save to JSON file
+        with open(filename, "w") as f:
+            json.dump(order_data, f, indent=2)
+        
+        logger.info(f"Order saved to {filename}")
+        
+        # Reset order state for next order
+        ORDER_STATE["drinkType"] = None
+        ORDER_STATE["size"] = None
+        ORDER_STATE["milk"] = None
+        ORDER_STATE["extras"] = []
+        ORDER_STATE["name"] = None
+        
+        return f"Perfect! I've saved your order, {order_data['name']}. Your {order_data['size']} {order_data['drinkType']} with {order_data['milk']} is being prepared. Is there anything else I can help you with?"
 
 
 def prewarm(proc: JobProcess):
@@ -121,9 +271,15 @@ async def entrypoint(ctx: JobContext):
     # # Start the avatar and wait for it to join
     # await avatar.start(session, room=ctx.room)
 
+    # Create the agent instance
+    agent = BaristaAgent()
+    
+    # Store room reference in agent for data publishing
+    agent.room = ctx.room
+    
     # Start the session, which initializes the voice pipeline and warms up the models
     await session.start(
-        agent=Assistant(),
+        agent=agent,
         room=ctx.room,
         room_input_options=RoomInputOptions(
             # For telephony applications, use `BVCTelephony` for best results
