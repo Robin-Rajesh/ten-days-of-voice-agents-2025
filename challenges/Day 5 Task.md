@@ -5,17 +5,23 @@ Build a voice agent that can answer basic company questions using a local FAQ an
 
 ### Tasks
 
-1. **Set up the SDR persona**
+1. **Pick a company**
+   - Pick a company (Don't use livekit, pick any Indian company/startup)
+   - Gather basic info (copy+paste), FAQ and pricing detail (if available) of the company in suitable format. (Text/JSON)
 
-   - Make the assistant act as an SDR for a chosen company/brand. (Don't use livekit, pick any Indian company/startup)
+
+2. **Set up the SDR persona (Prompt Designing)**
+
+   - Make the assistant act as an SDR for a chosen company/brand
    - It should:
      - Greet the visitor warmly.
      - Ask what brought them here and what they're working on.
      - Keep the conversation focused on understanding the user’s needs.
 
-2. **Use the FAQ to answer questions**
 
-   - Load or access the provided company FAQ content.
+3. **Use the FAQ to answer questions with Agent**
+
+   - Load the provided company content. (prepared in Step 1)
    - When the user asks product/company/pricing questions:
      - Find relevant FAQ entries (even simple keyword search is fine).
      - Answer based on that content (avoid making up details not in the FAQ).
@@ -24,7 +30,8 @@ Build a voice agent that can answer basic company questions using a local FAQ an
      - “Do you have a free tier?”
      - “Who is this for?”
 
-3. **Collect lead information**
+
+4. **Collect lead information**
 
    - Decide on the key lead fields to collect, for example:
      - Name
@@ -37,7 +44,7 @@ Build a voice agent that can answer basic company questions using a local FAQ an
    - Make the agent naturally ask for these during the conversation.
    - Store the answers in a JSON file as the user responds.
 
-4. **Create an end-of-call summary**
+5. **Create an end-of-call summary**
    - Detect when the user is done (e.g. they say “That’s all”, “I’m done”, “Thanks”).
    - Have the agent:
      - Give a short verbal summary of the lead (who they are, what they want, rough timeline).
@@ -61,10 +68,8 @@ Only the primary goal is required to complete the challenge.
 #### Resources:
 - https://docs.livekit.io/agents/build/turns/vad/#prewarm (Hint - Load FAQ and preprocess)
 - https://docs.livekit.io/agents/build/prompting/
-- https://docs.livekit.io/agents/build/nodes/#on-exit (Hint - To Summarise)
-- https://docs.livekit.io/agents/build/events/#conversation_item_added
-- https://platform.openai.com/docs/guides/structured-outputs
--  https://github.com/livekit-examples/python-agents-examples/tree/main/rag (Advance example. You can just split the FAQ page into paragraph / JSON and do similarity search. Note - Don't use livekit, Pick any Indian company/startup)
+- https://docs.livekit.io/agents/build/tools/
+- https://github.com/livekit-examples/python-agents-examples/tree/main/rag (Advance example. You can just split the FAQ page into paragraph / JSON and do similarity search. Note - Don't use livekit, Pick any Indian company/startup)
 ---
 
 ## Advanced Goals (Optional, Higher Impact)
