@@ -1,0 +1,86 @@
+{
+  "company_name": "Razorpay",
+  "tagline": "The most powerful way for businesses to accept payments, simplify banking, and manage operations",
+  "description": "Razorpay is a comprehensive payments and banking platform built for businesses in India. We enable companies to accept, process and disburse payments with ease, and provide tools for invoicing, expense management, and vendor payouts.",
+  "founded": "2014",
+  "headquarters": "Bangalore, India",
+  "faqs": [
+    {
+      "question": "What does Razorpay do?",
+      "answer": "Razorpay provides a full-stack payment solution for businesses in India. We help you accept payments online through credit cards, debit cards, UPI, net banking, and digital wallets. We also offer banking products like current accounts, corporate cards, payroll management, and vendor payout automation."
+    },
+    {
+      "question": "Who is Razorpay for?",
+      "answer": "Razorpay is for any business in India - from startups and SMEs to large enterprises. Whether you're an ecommerce store, SaaS company, educational institution, or marketplace, we have solutions tailored to your needs."
+    },
+    {
+      "question": "Do you have a free tier?",
+      "answer": "Yes! Razorpay offers a free plan to get started. You only pay transaction fees when you successfully process payments. There are no setup fees, annual maintenance charges, or hidden costs."
+    },
+    {
+      "question": "What are the pricing details?",
+      "answer": "Razorpay charges 2% transaction fee for Indian debit and credit cards, UPI, and net banking. For international cards, it's 3% plus GST. There are no setup fees or annual maintenance charges. Custom pricing is available for high-volume businesses."
+    },
+    {
+      "question": "How long does integration take?",
+      "answer": "Most businesses can integrate Razorpay in less than a day. We provide easy-to-use APIs, SDKs for all major platforms, and pre-built plugins for popular ecommerce platforms like Shopify, WooCommerce, and Magento."
+    },
+    {
+      "question": "What payment methods do you support?",
+      "answer": "We support all major payment methods in India including credit cards, debit cards, UPI, net banking, wallets like Paytm and PhonePe, EMI options, Cardless EMI, and even Pay Later options like LazyPay and Simpl."
+    },
+    {
+      "question": "Is Razorpay secure?",
+      "answer": "Yes, absolutely. Razorpay is PCI-DSS Level 1 certified, which is the highest level of security for payment processors. All transactions are encrypted with 256-bit SSL. We also provide advanced fraud detection and prevention tools."
+    },
+    {
+      "question": "Do you provide settlement of funds?",
+      "answer": "Yes, we settle funds to your bank account. Standard settlement is T+3 days (3 business days after transaction). We also offer instant settlements and same-day settlements for eligible businesses."
+    },
+    {
+      "question": "What other products do you offer?",
+      "answer": "Beyond payments, we offer RazorpayX Banking products including current accounts, vendor payouts, payroll automation, tax payments, corporate cards for employee expenses, and capital financing solutions. We also have Razorpay Rize for startup banking."
+    },
+    {
+      "question": "How is customer support?",
+      "answer": "We provide 24/7 customer support via phone, email, and chat. You also get a dedicated account manager for larger businesses. Our support team is highly rated and responsive."
+    },
+    {
+      "question": "Can I try Razorpay before committing?",
+      "answer": "Yes! You can sign up for a free test account and integrate with our test mode to see how everything works. There's no commitment required. You only go live when you're ready."
+    },
+    {
+      "question": "What are the benefits over competitors?",
+      "answer": "Razorpay offers the most comprehensive suite of payment and banking products in one platform. We have the best-in-class APIs, industry-leading success rates, transparent pricing, no hidden charges, and exceptional customer support. Plus, we're built specifically for the Indian market."
+    }
+  ],
+  "pricing": {
+    "payment_gateway": {
+      "domestic_cards": "2% per transaction",
+      "upi": "2% per transaction",
+      "net_banking": "2% per transaction",
+      "wallets": "2% per transaction",
+      "international_cards": "3% + GST per transaction",
+      "setup_fee": "Free",
+      "annual_fee": "Free"
+    },
+    "razorpayx_banking": {
+      "current_account": "No monthly fees",
+      "payouts": "Starting from Rs 5 per payout",
+      "vendor_payments": "Custom pricing",
+      "payroll": "Starting from Rs 50 per employee"
+    }
+  },
+  "key_features": [
+    "100+ payment methods",
+    "Instant settlement available",
+    "24/7 customer support",
+    "No setup or annual fees",
+    "PCI-DSS Level 1 certified",
+    "Advanced fraud detection",
+    "Easy API integration",
+    "Mobile SDKs available",
+    "Dashboard and analytics",
+    "Automated reconciliation"
+  ]
+}

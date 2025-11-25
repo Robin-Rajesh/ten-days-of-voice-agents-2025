@@ -1,0 +1,12 @@
+{
+  "name": null,
+  "company": null,
+  "email": null,
+  "role": null,
+  "use_case": null,
+  "team_size": null,
+  "timeline": null,
+  "conversation_notes": [],
+  "conversation_summary": "The user is working on an assignment exploring payment solutions for retail purposes, specifically interested in GPay-like solutions. They inquired about Razorpay's services, its base in India, and how to integrate it with a project. I explained Razorpay's offerings for retail, its location, and general integration methods. No lead information was collected as it was for an assignment.",
+  "timestamp": "2025-11-26T01:00:20.761346"
+}
