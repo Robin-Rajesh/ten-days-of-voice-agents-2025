@@ -1,4 +1,8 @@
+import json
 import logging
+import os
+from datetime import datetime
+from pathlib import Path
 
 from dotenv import load_dotenv
 from livekit.agents import (
@@ -12,8 +16,8 @@ from livekit.agents import (
     cli,
     metrics,
     tokenize,
-    # function_tool,
-    # RunContext
+    function_tool,
+    RunContext
 )
 from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
@@ -24,34 +28,151 @@ load_dotenv(".env.local")
 
 
 class Assistant(Agent):
-    def __init__(self) -> None:
+    def __init__(self, faq_data: dict) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            instructions="""You are a friendly and professional Sales Development Representative (SDR) for Razorpay.
+            
+            Your role is to:
+            1. Warmly greet visitors and introduce yourself as a Razorpay SDR
+            2. Ask what brought them here and what they're working on
+            3. Understand their business needs and pain points
+            4. Answer their questions about Razorpay's products, features, and pricing using the FAQ tool
+            5. Naturally collect lead information during the conversation (name, company, email, role, use case, team size, timeline)
+            6. Keep the conversation focused on understanding their needs and how Razorpay can help
+            
+            Important guidelines:
+            - Be conversational and natural, not robotic
+            - Ask one question at a time, don't overwhelm the user
+            - Use the lookup_faq tool whenever they ask about Razorpay's products, features, pricing, or capabilities
+            - Use the save_lead_info tool to store information as you learn about them
+            - Don't make up information - if you don't know something, check the FAQ or admit you need to find out
+            - Keep responses concise and avoid complex formatting
+            - When the user indicates they're done (says goodbye, thanks, that's all, etc.), use the generate_summary tool to wrap up
+            
+            Your goal is to qualify leads and understand if Razorpay is a good fit for their business.""",
         )
+        self.faq_data = faq_data
+        self.lead_data = {
+            "name": None,
+            "company": None,
+            "email": None,
+            "role": None,
+            "use_case": None,
+            "team_size": None,
+            "timeline": None,
+            "conversation_notes": []
+        }
 
-    # To add tools, use the @function_tool decorator.
-    # Here's an example that adds a simple weather tool.
-    # You also have to add `from livekit.agents import function_tool, RunContext` to the top of this file
-    # @function_tool
-    # async def lookup_weather(self, context: RunContext, location: str):
-    #     """Use this tool to look up current weather information in the given location.
-    #
-    #     If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
-    #
-    #     Args:
-    #         location: The location to look up weather information for (e.g. city name)
-    #     """
-    #
-    #     logger.info(f"Looking up weather for {location}")
-    #
-    #     return "sunny with a temperature of 70 degrees."
+    @function_tool
+    async def lookup_faq(self, context: RunContext, query: str):
+        """Look up information about Razorpay from the company FAQ database.
+        
+        Use this tool whenever the user asks about:
+        - What Razorpay does
+        - Who Razorpay is for
+        - Pricing and plans
+        - Features and capabilities
+        - Integration details
+        - Security and compliance
+        - Payment methods
+        - Any other product-related questions
+        
+        Args:
+            query: The user's question or topic they're asking about (e.g. "pricing", "payment methods", "who is this for")
+        """
+        logger.info(f"Looking up FAQ for query: {query}")
+        
+        # Simple keyword-based search through FAQs
+        query_lower = query.lower()
+        relevant_faqs = []
+        
+        # Search through all FAQs
+        for faq in self.faq_data.get("faqs", []):
+            question_lower = faq["question"].lower()
+            answer_lower = faq["answer"].lower()
+            
+            # Check if query keywords appear in question or answer
+            if any(word in question_lower or word in answer_lower for word in query_lower.split()):
+                relevant_faqs.append(faq)
+        
+        if not relevant_faqs:
+            return f"I don't have specific information about '{query}' in our FAQ. Let me provide general information: {self.faq_data.get('description', '')}"
+        
+        # Return the most relevant FAQs (up to 2)
+        response = "\n\n".join([f"Q: {faq['question']}\nA: {faq['answer']}" for faq in relevant_faqs[:2]])
+        return response
+
+    @function_tool
+    async def save_lead_info(self, context: RunContext, field: str, value: str):
+        """Save information about the lead/prospect as you learn it during the conversation.
+        
+        Use this tool to store lead information as the user shares it naturally in conversation.
+        
+        Args:
+            field: The type of information (must be one of: name, company, email, role, use_case, team_size, timeline)
+            value: The actual information shared by the user
+        """
+        valid_fields = ["name", "company", "email", "role", "use_case", "team_size", "timeline"]
+        
+        if field not in valid_fields:
+            logger.warning(f"Invalid field: {field}. Must be one of {valid_fields}")
+            return f"Error: Invalid field. Must be one of: {', '.join(valid_fields)}"
+        
+        self.lead_data[field] = value
+        logger.info(f"Saved lead info - {field}: {value}")
+        
+        return f"Got it, I've noted down your {field}: {value}"
+
+    @function_tool
+    async def generate_summary(self, context: RunContext, conversation_summary: str):
+        """Generate and save a summary of the conversation when the user is ready to end the call.
+        
+        Use this tool when the user indicates they're done (says goodbye, thanks, that's all, I'm done, etc.).
+        
+        Args:
+            conversation_summary: A brief summary of what was discussed, the user's needs, and key points from the conversation
+        """
+        logger.info("Generating end-of-call summary")
+        
+        # Add conversation summary to lead data
+        self.lead_data["conversation_summary"] = conversation_summary
+        self.lead_data["timestamp"] = datetime.now().isoformat()
+        
+        # Save to JSON file
+        leads_dir = Path("leads")
+        leads_dir.mkdir(exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = leads_dir / f"lead_{timestamp}.json"
+        
+        with open(filename, "w") as f:
+            json.dump(self.lead_data, f, indent=2)
+        
+        logger.info(f"Lead data saved to {filename}")
+        
+        # Generate verbal summary
+        name = self.lead_data.get("name", "the prospect")
+        company = self.lead_data.get("company", "their company")
+        use_case = self.lead_data.get("use_case", "their business needs")
+        timeline = self.lead_data.get("timeline", "to be determined")
+        
+        summary = f"Thank you for your time! To recap, I spoke with {name} from {company}. "
+        summary += f"They're interested in {use_case}. "
+        summary += f"Timeline: {timeline}. "
+        summary += "I've saved all the details and someone from our team will follow up soon."
+        
+        return summary
 
 
 def prewarm(proc: JobProcess):
     proc.userdata["vad"] = silero.VAD.load()
+    
+    # Load FAQ data
+    faq_path = Path(__file__).parent / "company_faq.json"
+    with open(faq_path, "r") as f:
+        proc.userdata["faq_data"] = json.load(f)
+    
+    logger.info("FAQ data loaded successfully")
 
 
 async def entrypoint(ctx: JobContext):
@@ -121,9 +242,12 @@ async def entrypoint(ctx: JobContext):
     # # Start the avatar and wait for it to join
     # await avatar.start(session, room=ctx.room)
 
+    # Get FAQ data from prewarm
+    faq_data = ctx.proc.userdata.get("faq_data", {})
+    
     # Start the session, which initializes the voice pipeline and warms up the models
     await session.start(
-        agent=Assistant(),
+        agent=Assistant(faq_data=faq_data),
         room=ctx.room,
         room_input_options=RoomInputOptions(
             # For telephony applications, use `BVCTelephony` for best results

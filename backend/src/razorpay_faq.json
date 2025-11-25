@@ -1,0 +1,69 @@
+{
+  "company_info": {
+    "name": "Razorpay",
+    "description": "Razorpay is India's leading full-stack financial solutions company, providing businesses with payment gateway solutions, banking, and financial services.",
+    "founded": "2014",
+    "headquarters": "Bangalore, India"
+  },
+  "faq": [
+    {
+      "question": "What does Razorpay do?",
+      "answer": "Razorpay provides payment gateway solutions for businesses. We help companies accept online payments through credit cards, debit cards, net banking, UPI, wallets, and other payment methods. We offer a complete payment infrastructure for businesses of all sizes."
+    },
+    {
+      "question": "What products does Razorpay offer?",
+      "answer": "Razorpay offers Payment Gateway for accepting online payments, Payment Links for quick payment collection, Payment Pages for customizable checkout experiences, RazorpayX for banking and finance automation, and Razorpay Capital for business loans and working capital."
+    },
+    {
+      "question": "Who is Razorpay for?",
+      "answer": "Razorpay is for businesses of all sizes - from startups to large enterprises. We serve e-commerce businesses, SaaS companies, marketplaces, subscription services, education platforms, healthcare providers, and any business that needs to accept online payments in India."
+    },
+    {
+      "question": "Do you have a free tier?",
+      "answer": "Yes, Razorpay offers competitive pricing. We have no setup fees, no annual maintenance charges, and no hidden costs. Our transaction charges are competitive and transparent. You only pay when you receive payments."
+    },
+    {
+      "question": "What are the pricing details?",
+      "answer": "Razorpay charges 2% per transaction for domestic cards and 3% for international cards. UPI and net banking transactions are charged at 2% per transaction. There are no setup fees, no annual maintenance charges, and settlements happen automatically to your bank account."
+    },
+    {
+      "question": "How long does it take to get started?",
+      "answer": "Getting started with Razorpay is quick. You can sign up in minutes, complete the KYC verification process which typically takes 1-2 business days, and start accepting payments once approved. Our onboarding process is designed to be fast and hassle-free."
+    },
+    {
+      "question": "What payment methods are supported?",
+      "answer": "Razorpay supports over 100 payment methods including all major credit and debit cards, UPI, net banking from over 50 banks, digital wallets like Paytm and PhonePe, EMI options, buy now pay later solutions, and international payment methods."
+    },
+    {
+      "question": "Is Razorpay safe and secure?",
+      "answer": "Yes, Razorpay is PCI DSS Level 1 certified, which is the highest level of security certification for payment processors. We use bank-grade security, 256-bit SSL encryption, and comply with all RBI regulations. Your customer data and payments are completely secure."
+    },
+    {
+      "question": "What is the settlement time?",
+      "answer": "Razorpay offers T+1 settlement, meaning payments are settled to your bank account within one business day. We also offer instant settlements for specific payment methods with RazorpayX Current Account."
+    },
+    {
+      "question": "Can I integrate Razorpay with my existing website or app?",
+      "answer": "Yes, Razorpay offers easy integration with multiple platforms. We provide plugins for WordPress, WooCommerce, Shopify, Magento, and other e-commerce platforms. We also offer comprehensive APIs and SDKs for custom integrations with websites and mobile apps."
+    },
+    {
+      "question": "What kind of support do you provide?",
+      "answer": "Razorpay provides 24/7 customer support via email, chat, and phone. We also offer comprehensive documentation, developer resources, and dedicated account managers for enterprise clients to help with integration and ongoing support."
+    },
+    {
+      "question": "Does Razorpay work with international payments?",
+      "answer": "Yes, Razorpay supports international payments. You can accept payments from international cards and we also offer solutions for businesses that want to accept payments from customers outside India through our international payment gateway."
+    }
+  ],
+  "pricing": {
+    "setup_fee": "Free",
+    "annual_fee": "Free",
+    "domestic_cards": "2% per transaction",
+    "international_cards": "3% per transaction",
+    "upi_netbanking": "2% per transaction",
+    "settlement": "T+1 (next business day)",
+    "instant_settlement": "Available with RazorpayX"
+  }
+}
+
+

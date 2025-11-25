@@ -1,0 +1,12 @@
+<svg width="200" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Khan Academy Leaf Icon -->
+  <g transform="translate(0, 5)">
+    <!-- Hexagon background -->
+    <path d="M15 2L27 8.5V21.5L15 28L3 21.5V8.5L15 2Z" fill="#14BF96"/>
+    <!-- Inner shape -->
+    <path d="M15 10L20 12.5V17.5L15 20L10 17.5V12.5L15 10Z" fill="white"/>
+  </g>
+  
+  <!-- Khan Academy Text -->
+  <text x="35" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0A2A3B" letter-spacing="-0.02em">Khan Academy</text>
+</svg>
