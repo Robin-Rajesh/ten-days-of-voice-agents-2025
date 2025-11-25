@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import type { AppConfig } from '@/app-config';
-import { BeverageVisualizer } from '@/components/app/beverage-visualizer';
 import { ChatTranscript } from '@/components/app/chat-transcript';
 import { PreConnectMessage } from '@/components/app/preconnect-message';
 import { TileLayout } from '@/components/app/tile-layout';
@@ -93,9 +92,6 @@ export const SessionView = ({
 
   return (
     <section className="bg-background relative z-10 h-full w-full overflow-hidden" {...props}>
-      {/* Beverage Visualizer */}
-      <BeverageVisualizer />
-      
       {/* Chat Transcript */}
       <div
         className={cn(
