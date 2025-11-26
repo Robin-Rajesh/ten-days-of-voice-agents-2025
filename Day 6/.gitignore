@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+__pycache__/
+.venv/
+node_modules/
+.next/
+dist/
+.env.local
+*.log
+*.lock
+sim_responses.txt
