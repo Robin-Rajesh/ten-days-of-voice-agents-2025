@@ -1,85 +1,201 @@
 # Day 7 – Food & Grocery Ordering Voice Agent
 
-Today you will build a health and wellness–oriented voice agent that acts as a supportive, but realistic and grounded companion.
+A voice-powered shopping assistant for food ordering and quick commerce platforms.
 
-## The core idea:
+## Overview
 
-Each day, the agent checks in with the user about their mood and goals, has a short conversation, and stores the results in a JSON file so it can refer back to previous days.
+Build a shopping assistant that helps users browse a catalog, add items to a cart, and place orders through natural voice conversations.
 
-## Primary Goal (Required)
+## Features Implemented
 
-Build a daily health & wellness voice companion that:
+### ✅ Primary Goal (MVP)
 
-- Uses a clear, grounded system prompt.
-- Conducts short daily check-ins via voice.
-- Persists the key data from each check-in in a JSON file.
-- Uses past data (from JSON) to inform the next conversation in a basic way.
+1. **Product Catalog** (`catalog.json`)
+   - 15 items across multiple categories (Groceries, Snacks)
+   - Each item includes: id, name, category, price, unit, tags
+   - Items: bread, eggs, milk, pasta, chicken, cheese, produce, snacks, etc.
 
-## Behaviour Requirements
+2. **Cart Management**
+   - `add_item(item_name, quantity)` - Add items with quantities
+   - `remove_item(item_name)` - Remove items from cart
+   - `update_quantity(item_name, quantity)` - Update item quantities
+   - `list_cart()` - Show cart contents with total price
 
-Your agent should:
+3. **Catalog Browsing**
+   - `browse_catalog(category)` - Browse all items or filter by category
+   - `search_catalog(search_term)` - Search by name, tags, or category
 
-### Ask about mood and energy
+4. **Order Placement**
+   - `place_order(customer_name, address)` - Save order to JSON file
+   - Order confirmation with total and order ID
+   - Cart automatically cleared after order placement
+   - Orders saved to `orders/order_[Name]_[Timestamp].json`
 
-**Example topics (but not hard-coded):**
-- "How are you feeling today?"
-- "What's your energy like?"
-- "Anything stressing you out right now?"
+### ✅ Advanced Features
 
-**Avoid diagnosis or medical claims. This is a supportive check-in companion, not a clinician.**
+5. **Recipe Intelligence**
+   - `ingredients_for(dish, servings)` - Add recipe ingredients to cart
+   - Pre-configured recipes: peanut butter sandwich, pasta for two, omelette
+   - Automatically adds all required ingredients
 
-### Ask about intentions / objectives for the day
+6. **Order Tracking**
+   - `check_order_status(order_id)` - Check current order status
+   - `mock_progress_order(order_id, next_status)` - Update order status
+   - Status progression: placed → preparing → out_for_delivery → delivered
 
-**Simple, practical goals:**
-- "What are 1–3 things you'd like to get done today?"
-- "Is there anything you want to do for yourself (rest, exercise, hobbies)?"
+## Project Structure
 
-### Offer simple, realistic advice or reflections
+```
+Day 7/
+├── backend/
+│   ├── src/
+│   │   └── order_agent.py          # Main agent implementation
+│   ├── catalog.json                 # Product catalog
+│   ├── orders/                      # Order JSON files (generated)
+│   ├── pyproject.toml              # Python dependencies
+│   └── .env.local                  # API keys (not in repo)
+├── frontend/
+│   ├── app/                        # Next.js app
+│   ├── components/                 # React components
+│   ├── package.json                # Node dependencies
+│   └── .env.local                  # LiveKit credentials (not in repo)
+└── README.md                       # This file
+```
 
-**Suggestions should be:**
-- Small, actionable, and grounded.
-- Non-medical, non-diagnostic.
+## Setup Instructions
 
-**Examples of advice style:**
-- Break large goals into smaller steps.
-- Encourage short breaks.
-- Offer simple grounding ideas (e.g., "take a 5-minute walk").
+### Backend Setup
 
-### Close the check-in with a brief recap
+1. **Navigate to backend directory:**
+   ```bash
+   cd "Day 7/backend"
+   ```
 
-**Repeat back:**
-- Today's mood summary.
-- The main 1–3 objectives.
-- Confirm: "Does this sound right?"
+2. **Install dependencies:**
+   ```bash
+   pip install livekit-agents livekit-plugins-deepgram livekit-plugins-google livekit-plugins-murf livekit-plugins-silero
+   ```
 
-## Use JSON-based persistence
+3. **Create `.env.local` file:**
+   ```env
+   LIVEKIT_URL=wss://your-livekit-url
+   LIVEKIT_API_KEY=your-api-key
+   LIVEKIT_API_SECRET=your-api-secret
+   DEEPGRAM_API_KEY=your-deepgram-key
+   GOOGLE_API_KEY=your-google-key
+   MURF_API_KEY=your-murf-key
+   ```
 
-- After each check-in, write an entry to a JSON file from the Python backend.
-- On a new session:
-  - Read the JSON file.
-  - Provide at least one small reference to previous check-ins.
+4. **Run the agent:**
+   ```bash
+   python src/order_agent.py dev
+   ```
 
-**For example:** "Last time we talked, you mentioned being low on energy. How does today compare?"
+### Frontend Setup
 
-## Data Persistence Requirements
+1. **Navigate to frontend directory:**
+   ```bash
+   cd "Day 7/frontend"
+   ```
 
-Store data in a single JSON file (e.g., `wellness_log.json`).
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
 
-Each session entry should at least contain:
+3. **Create `.env.local` file:**
+   ```env
+   LIVEKIT_URL=wss://your-livekit-url
+   LIVEKIT_API_KEY=your-api-key
+   LIVEKIT_API_SECRET=your-api-secret
+   ```
 
-- Date/time of the check-in
-- Self-reported mood (text, or a simple scale)
-- One or more stated objectives / intentions
-- Optional: a short agent-generated summary sentence
+4. **Run the frontend:**
+   ```bash
+   pnpm dev
+   ```
 
-You can choose the exact schema, but keep it consistent and human-readable.
+5. **Open browser:**
+   Navigate to http://localhost:3000
 
-## Resources:
+## Usage Examples
 
-- https://docs.livekit.io/agents/build/tools/
-- https://docs.livekit.io/agents/build/agents-handoffs/#passing-state
-- https://docs.livekit.io/agents/build/tasks/
-- https://github.com/livekit/agents/blob/main/examples/drive-thru/agent.py
+### Browse Catalog
+- "What's in the catalog?"
+- "Show me all groceries"
+- "Do you have any dairy products?"
+- "Search for bread"
 
-If you achieve everything in this section, you have completed the Day 7 primary goal.
+### Add Items to Cart
+- "Add 2 eggs to my cart"
+- "I need 1 loaf of bread"
+- "Add 3 bottles of milk"
+
+### Recipe-Based Shopping
+- "I need ingredients for pasta for two"
+- "Add ingredients for a peanut butter sandwich"
+- "Get me what I need for an omelette"
+
+### View Cart
+- "What's in my cart?"
+- "Show me my cart"
+- "List my items"
+
+### Place Order
+- "Place my order for John Doe at 123 Main St"
+- "I'm ready to checkout"
+- "Complete my order"
+
+### Track Order
+- "What's the status of my order?"
+- "Check order order_John_Doe_20251127234036.json"
+
+## Technical Stack
+
+- **Framework:** LiveKit Agents (Python)
+- **STT:** Deepgram Nova-3
+- **LLM:** Google Gemini 2.5 Flash
+- **TTS:** Murf Falcon (en-US-matthew voice)
+- **VAD:** Silero
+- **Frontend:** Next.js with React
+- **Package Manager:** pnpm
+
+## Order Data Structure
+
+Orders are saved as JSON files in `backend/orders/`:
+
+```json
+{
+  "customer_name": "John Doe",
+  "address": "123 Main St",
+  "items": [
+    {
+      "id": "eggs_large",
+      "name": "Large Eggs (12 pack)",
+      "quantity": 2,
+      "unit_price": 3.99,
+      "line_total": 7.98
+    }
+  ],
+  "total": 7.98,
+  "timestamp": "2025-11-27T23:40:36.556736",
+  "status": "placed",
+  "status_history": [
+    {
+      "status": "placed",
+      "timestamp": "2025-11-27T23:40:36.556746"
+    }
+  ]
+}
+```
+
+## Resources
+
+- [LiveKit Agents Documentation](https://docs.livekit.io/agents/)
+- [Function Tools](https://docs.livekit.io/agents/build/tools/)
+- [Prompting Guide](https://docs.livekit.io/agents/build/prompting/)
+
+## License
+
+MIT
 

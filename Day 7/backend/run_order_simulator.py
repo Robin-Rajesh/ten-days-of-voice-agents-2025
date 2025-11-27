@@ -23,17 +23,26 @@ async def run_simulation():
     print(await agent.list_cart(None))
 
     # Place order
-    print(await agent.place_order(None, customer_name="John Doe", address="123 Demo St"))
-
-    # Load last order written
-    orders_dir = Path("orders")
-    files = sorted(orders_dir.glob('order_*.json'))
-    if not files:
-        print("No orders found")
-        return
-    with open(files[-1], 'r') as f:
-        print('\n[DB] Latest order:\n')
-        print(json.dumps(json.load(f), indent=2))
+    place_result = await agent.place_order(None, customer_name="John Doe", address="123 Demo St")
+    print(place_result)
+    # Extract order id from place_result (filename at end)
+    if 'Your order id is' in place_result:
+        order_id = place_result.split('Your order id is')[-1].strip().rstrip('.')
+    else:
+        # find last order file
+        orders_dir = Path('orders')
+        files = sorted(orders_dir.glob('order_*.json'))
+        order_id = files[-1].name if files else None
+    if order_id:
+        # check status
+        print(await agent.check_order_status(None, order_id))
+        # progress status
+        print(await agent.mock_progress_order(None, order_id))
+        print(await agent.check_order_status(None, order_id))
+        print(await agent.mock_progress_order(None, order_id))
+        print(await agent.check_order_status(None, order_id))
+    else:
+        print('Could not determine order id')
 
 
 if __name__ == '__main__':

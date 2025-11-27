@@ -1,0 +1,3 @@
+# This file ensures the orders directory is tracked by git
+# Order JSON files are generated at runtime and excluded via .gitignore
+
