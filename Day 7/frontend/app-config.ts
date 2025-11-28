@@ -20,20 +20,20 @@ export interface AppConfig {
 }
 
 export const APP_CONFIG_DEFAULTS: AppConfig = {
-  companyName: 'LiveKit',
-  pageTitle: 'LiveKit Voice Agent',
-  pageDescription: 'A voice agent built with LiveKit',
+  companyName: 'Stranger Things',
+  pageTitle: 'Stranger Things Game Master',
+  pageDescription: 'A D&D-style voice adventure set in Hawkins, 1985',
 
   supportsChatInput: true,
-  supportsVideoInput: true,
-  supportsScreenShare: true,
+  supportsVideoInput: false,
+  supportsScreenShare: false,
   isPreConnectBufferEnabled: true,
 
-  logo: '/lk-logo.svg',
-  accent: '#002cf2',
-  logoDark: '/lk-logo-dark.svg',
-  accentDark: '#1fd5f9',
-  startButtonText: 'Start call',
+  logo: '/Stranger_Things_logo.png',
+  accent: '#cc0000',  // Stranger Things red
+  logoDark: '/Stranger_Things_logo.png',
+  accentDark: '#ff0000',  // Brighter red for dark mode
+  startButtonText: 'Enter the Upside Down',
 
   // for LiveKit Cloud Sandbox
   sandboxId: undefined,

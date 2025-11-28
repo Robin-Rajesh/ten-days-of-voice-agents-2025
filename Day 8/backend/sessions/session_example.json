@@ -1,0 +1,100 @@
+{
+  "player_name": "Mike",
+  "start_time": "2025-11-28T22:45:00.123456",
+  "end_time": "2025-11-28T23:15:00.654321",
+  "turn_count": 12,
+  "story_log": [
+    {
+      "turn": 0,
+      "type": "gm",
+      "text": "Welcome, Mike. It's the summer of 1985 in Hawkins, Indiana. The sun is setting as you ride your bike past the new Starcourt Mall. Suddenly, the streetlights flicker and die. In the distance, you hear a strange, low humming sound coming from the direction of the old Hawkins Lab. What do you do?",
+      "timestamp": "2025-11-28T22:45:00.123456"
+    },
+    {
+      "turn": 1,
+      "type": "player",
+      "text": "I ride my bike toward the sound to investigate",
+      "timestamp": "2025-11-28T22:46:15.789012"
+    },
+    {
+      "turn": 1,
+      "type": "gm",
+      "text": "You pedal faster, your heart racing. As you approach the abandoned lab, the humming grows louder. The chain-link fence has a hole torn in it, big enough to squeeze through. Through the fence, you see a faint blue glow coming from one of the basement windows. What do you do?",
+      "timestamp": "2025-11-28T22:46:20.234567"
+    },
+    {
+      "turn": 2,
+      "type": "player",
+      "text": "I squeeze through the fence and look in the window",
+      "timestamp": "2025-11-28T22:47:30.456789"
+    },
+    {
+      "turn": 2,
+      "type": "gm",
+      "text": "You squeeze through the fence, your jacket catching on the wire. Peering into the basement window, you see strange vines covering the walls, pulsing with that eerie blue light. You notice a walkie-talkie on the ground near the window, still working. What do you do?",
+      "timestamp": "2025-11-28T22:47:35.678901"
+    },
+    {
+      "turn": 3,
+      "type": "player",
+      "text": "I pick up the walkie-talkie",
+      "timestamp": "2025-11-28T22:48:45.123456"
+    },
+    {
+      "turn": 3,
+      "type": "gm",
+      "text": "You grab the device. It crackles to life with static. The blue glow from the window intensifies, and you hear footsteps inside the building. The walkie-talkie suddenly emits a voice: 'Mike? Is that you?' It sounds like Lucas. What do you do?",
+      "timestamp": "2025-11-28T22:48:50.234567"
+    },
+    {
+      "turn": 4,
+      "type": "player",
+      "text": "I respond on the walkie-talkie and tell Lucas where I am",
+      "timestamp": "2025-11-28T22:50:00.345678"
+    },
+    {
+      "turn": 4,
+      "type": "gm",
+      "text": "You press the button and whisper your location. Lucas says he's on his way with Dustin and Will. The footsteps inside grow closer. You need to decide: wait for your friends or investigate the source of the blue glow now. What do you do?",
+      "timestamp": "2025-11-28T22:50:05.456789"
+    },
+    {
+      "turn": 5,
+      "type": "player",
+      "text": "I wait for my friends while keeping watch",
+      "timestamp": "2025-11-28T22:51:15.567890"
+    },
+    {
+      "turn": 5,
+      "type": "gm",
+      "text": "You crouch behind a bush, watching the window. Five minutes pass. You see headlights approaching - your friends arrive on their bikes. Together, you peer into the window. The vines are moving now, reaching toward something in the darkness. What do you do?",
+      "timestamp": "2025-11-28T22:51:20.678901"
+    },
+    {
+      "turn": 6,
+      "type": "player",
+      "text": "We decide to investigate together and find a way inside",
+      "timestamp": "2025-11-28T22:52:30.789012"
+    },
+    {
+      "turn": 6,
+      "type": "gm",
+      "text": "You and your friends find an unlocked side door. Inside, the humming is deafening. The vines lead down a corridor toward a sealed door marked 'Authorized Personnel Only.' You've discovered something strange in Hawkins - the adventure is just beginning. Would you like to save this session?",
+      "timestamp": "2025-11-28T22:52:35.890123"
+    }
+  ],
+  "locations_visited": [
+    "Starcourt Mall",
+    "Hawkins Lab exterior",
+    "Hawkins Lab interior"
+  ],
+  "items_found": [
+    "walkie-talkie"
+  ],
+  "npcs_met": [
+    "Lucas (via walkie-talkie)",
+    "Dustin",
+    "Will"
+  ]
+}
+

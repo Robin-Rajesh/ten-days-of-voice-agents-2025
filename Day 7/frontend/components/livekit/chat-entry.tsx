@@ -29,6 +29,9 @@ export const ChatEntry = ({
   const time = new Date(timestamp);
   const title = time.toLocaleTimeString(locale, { timeStyle: 'full' });
 
+  // Display name for Game Master experience
+  const displayName = name || (messageOrigin === 'local' ? 'You' : 'Game Master');
+
   return (
     <li
       title={title}
@@ -38,20 +41,24 @@ export const ChatEntry = ({
     >
       <header
         className={cn(
-          'text-muted-foreground flex items-center gap-2 text-sm',
+          'text-muted-foreground flex items-center gap-2 text-sm font-semibold',
           messageOrigin === 'local' ? 'flex-row-reverse' : 'text-left'
         )}
       >
-        {name && <strong>{name}</strong>}
-        <span className="font-mono text-xs opacity-0 transition-opacity ease-linear group-hover:opacity-100">
+        <strong className={messageOrigin === 'local' ? 'text-primary' : 'text-accent'}>
+          {displayName}
+        </strong>
+        <span className="font-mono text-xs opacity-50 transition-opacity ease-linear group-hover:opacity-100">
           {hasBeenEdited && '*'}
           {time.toLocaleTimeString(locale, { timeStyle: 'short' })}
         </span>
       </header>
       <span
         className={cn(
-          'max-w-4/5 rounded-[20px]',
-          messageOrigin === 'local' ? 'bg-muted ml-auto p-2' : 'mr-auto'
+          'max-w-4/5 rounded-[20px] p-3 text-base leading-relaxed',
+          messageOrigin === 'local'
+            ? 'bg-muted ml-auto border border-primary/20'
+            : 'mr-auto bg-accent/10 border border-accent/20'
         )}
       >
         {message}
