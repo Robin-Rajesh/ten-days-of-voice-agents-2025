@@ -20,9 +20,9 @@ export interface AppConfig {
 }
 
 export const APP_CONFIG_DEFAULTS: AppConfig = {
-  companyName: 'Voice Shopping',
-  pageTitle: 'Voice Shopping Assistant',
-  pageDescription: 'Shop with your voice - Browse products and place orders naturally',
+  companyName: 'Improv Battle',
+  pageTitle: 'Improv Battle - Voice Game Show',
+  pageDescription: 'Test your improv skills in this high-energy voice game show!',
 
   supportsChatInput: true,
   supportsVideoInput: false,
@@ -30,10 +30,10 @@ export const APP_CONFIG_DEFAULTS: AppConfig = {
   isPreConnectBufferEnabled: true,
 
   logo: '',  // No logo
-  accent: '#2563eb',  // Blue for shopping
+  accent: '#dc2626',  // Red for game show energy
   logoDark: '',
-  accentDark: '#3b82f6',  // Brighter blue for dark mode
-  startButtonText: 'Start Shopping',
+  accentDark: '#ef4444',  // Brighter red for dark mode
+  startButtonText: 'Start Improv Battle',
 
   // for LiveKit Cloud Sandbox
   sandboxId: undefined,

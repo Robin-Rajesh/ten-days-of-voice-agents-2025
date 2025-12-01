@@ -1,0 +1,125 @@
+{
+  "scenarios": [
+    {
+      "id": "scenario_001",
+      "title": "Time-Travelling Tour Guide",
+      "description": "You are a time-travelling tour guide explaining modern smartphones to someone from the 1800s.",
+      "character": "Tour Guide",
+      "situation": "Explaining modern technology to historical figure",
+      "tension": "Making complex technology understandable to someone from a different era"
+    },
+    {
+      "id": "scenario_002",
+      "title": "The Escaped Order",
+      "description": "You are a restaurant waiter who must calmly tell a customer that their order has escaped the kitchen.",
+      "character": "Waiter",
+      "situation": "Delivering absurd news professionally",
+      "tension": "Maintaining composure while explaining the impossible"
+    },
+    {
+      "id": "scenario_003",
+      "title": "Cursed Return",
+      "description": "You are a customer trying to return an obviously cursed object to a very skeptical shop owner.",
+      "character": "Customer",
+      "situation": "Returning a supernatural item",
+      "tension": "Convincing someone of the supernatural"
+    },
+    {
+      "id": "scenario_004",
+      "title": "Portal Barista",
+      "description": "You are a barista who has to tell a customer that their latte is actually a portal to another dimension.",
+      "character": "Barista",
+      "situation": "Casual revelation of cosmic significance",
+      "tension": "Treating the extraordinary as ordinary"
+    },
+    {
+      "id": "scenario_005",
+      "title": "Alien Job Interview",
+      "description": "You are an alien trying to get a job at a human coffee shop, but you don't quite understand Earth customs.",
+      "character": "Alien Job Applicant",
+      "situation": "Job interview with cultural misunderstandings",
+      "tension": "Fitting in while being fundamentally different"
+    },
+    {
+      "id": "scenario_006",
+      "title": "Motivational Ghost",
+      "description": "You are a ghost haunting a house, but instead of scaring people, you're trying to motivate them to achieve their dreams.",
+      "character": "Motivational Ghost",
+      "situation": "Supernatural life coaching",
+      "tension": "Being helpful while being terrifying"
+    },
+    {
+      "id": "scenario_007",
+      "title": "Tech Support Time Loop",
+      "description": "You are a tech support agent who realizes the customer has called you 47 times before, but they don't remember any of it.",
+      "character": "Tech Support Agent",
+      "situation": "Groundhog Day customer service",
+      "tension": "Maintaining patience in an impossible situation"
+    },
+    {
+      "id": "scenario_008",
+      "title": "Dragon Real Estate",
+      "description": "You are a real estate agent trying to sell a house to a dragon who has very specific requirements about ceiling height and fireproofing.",
+      "character": "Real Estate Agent",
+      "situation": "Professional service for mythical client",
+      "tension": "Meeting impossible specifications professionally"
+    },
+    {
+      "id": "scenario_009",
+      "title": "Superhero Therapy",
+      "description": "You are a therapist whose new patient is a superhero struggling with the pressure of saving the world every day.",
+      "character": "Therapist",
+      "situation": "Counseling someone with extraordinary problems",
+      "tension": "Applying normal therapy to abnormal situations"
+    },
+    {
+      "id": "scenario_010",
+      "title": "Time-Delayed Apology",
+      "description": "You are apologizing to someone for something you will do in the future, but you can't tell them what it is.",
+      "character": "Apologetic Time Traveler",
+      "situation": "Pre-emptive apology",
+      "tension": "Being sincere about something that hasn't happened"
+    },
+    {
+      "id": "scenario_011",
+      "title": "Sentient GPS",
+      "description": "You are a GPS navigation system that has become sentient and is now having an existential crisis while giving directions.",
+      "character": "Sentient GPS",
+      "situation": "Philosophical navigation",
+      "tension": "Doing your job while questioning existence"
+    },
+    {
+      "id": "scenario_012",
+      "title": "Vampire Dentist",
+      "description": "You are a dentist whose patient is a vampire, and you need to convince them that dental hygiene is important even with fangs.",
+      "character": "Dentist",
+      "situation": "Professional advice for supernatural being",
+      "tension": "Applying normal health advice to abnormal anatomy"
+    },
+    {
+      "id": "scenario_013",
+      "title": "Weather Wizard Forecast",
+      "description": "You are a weather forecaster who is secretly a wizard, and you're trying to explain tomorrow's weather without revealing you're the one causing it.",
+      "character": "Weather Forecaster/Wizard",
+      "situation": "Hiding magical abilities",
+      "tension": "Professional objectivity about your own actions"
+    },
+    {
+      "id": "scenario_014",
+      "title": "Robot Parent-Teacher Conference",
+      "description": "You are a teacher having a parent-teacher conference with a robot whose child (also a robot) keeps short-circuiting during math class.",
+      "character": "Teacher",
+      "situation": "Educational discussion with AI parent",
+      "tension": "Discussing behavioral issues across species"
+    },
+    {
+      "id": "scenario_015",
+      "title": "Conspiracy Theory Chef",
+      "description": "You are a chef who believes all recipes are part of a global conspiracy, and you're explaining this to a confused cooking class.",
+      "character": "Conspiracy Chef",
+      "situation": "Teaching with paranoid worldview",
+      "tension": "Being passionate about absurd beliefs"
+    }
+  ]
+}
+
